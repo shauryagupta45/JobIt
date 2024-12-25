@@ -2,10 +2,10 @@ package jobit.JobIt.Company;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -21,4 +21,24 @@ public class CompanyController {
         return companyService.findAll() ;
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateCompany(@PathVariable Long id, @RequestBody Company company){
+        if(Boolean.TRUE.equals(companyService.updateCompany(company, id)))
+            return ResponseEntity.ok("Company updated Succesfully");
+
+        return (ResponseEntity<String>)ResponseEntity.notFound();
+    }
+
+    @PostMapping
+    public ResponseEntity<String> createCompany( @RequestBody Company company){
+        companyService.createCompany(company);
+        return ResponseEntity.ok("New company added");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCompanyById( @PathVariable Long id){
+        if(Boolean.TRUE.equals(companyService.deleteCompanyById(id)))
+            return ResponseEntity.ok("Company Successfully delete") ;
+        return new ResponseEntity<>("No company to be deleted", HttpStatus.NOT_FOUND) ;
+    }
 }

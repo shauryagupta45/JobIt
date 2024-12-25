@@ -2,6 +2,7 @@ package jobit.JobIt.Job;
 
 
 import jakarta.persistence.*;
+import jobit.JobIt.Company.Company;
 
 @Entity
 @Table(name = "job_table")
@@ -16,18 +17,22 @@ public class Job {
     private String maxSalary ;
     private String location ;
 
-    //Remember, JPA needs to have a default no arguments constructor.
+    @ManyToOne
+    private Company company ;
+
+//Remember, JPA needs to have a default no arguments constructor.
 
     public Job() {
     }
 
-    public Job(Long id, String title, String description, String minSalary, String maxSalary, String location) {
+    public Job(Long id, String title, String description, String minSalary, String maxSalary, String location, Company company) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
         this.location = location;
+        this.company = company;
     }
 
     public Long getId() {
@@ -77,6 +82,15 @@ public class Job {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
 
     @Override
     public String toString() {

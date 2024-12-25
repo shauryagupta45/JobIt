@@ -1,5 +1,6 @@
 package jobit.JobIt.Company;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jobit.JobIt.Job.Job;
 
@@ -15,7 +16,8 @@ public class Company {
     private String name ;
     private String description ;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "company")
     private List<Job> jobs;
 
 //    private List<Reviews> reviews ;
