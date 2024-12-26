@@ -18,12 +18,9 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepo.findAll() ;
     }
 
-    public Optional<Company> getCompanyById(Long id){
+    public Company getCompanyById(Long id){
 
-        if(Boolean.TRUE.equals(companyRepo.existsById(id))){
-            return companyRepo.findById(id);
-        }
-        return null ;
+        return companyRepo.findById(id).orElse(null);
     }
 
     @Override

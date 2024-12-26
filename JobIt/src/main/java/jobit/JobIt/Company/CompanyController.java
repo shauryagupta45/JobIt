@@ -24,8 +24,12 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Company> findCompanyById(@PathVariable Long id) {
-        Optional<Company> company = companyService.getCompanyById(id);
-        return company.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null   , HttpStatus.NOT_FOUND));
+        Company company = companyService.getCompanyById(id);
+
+        if(company != null)
+            return  new ResponseEntity<>(company,HttpStatus.OK);
+
+        return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/{id}")
