@@ -6,7 +6,6 @@ import jobit.JobIt.Company.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.* ;
 
 @Service
@@ -17,6 +16,14 @@ public class CompanyServiceImpl implements CompanyService {
 
     public List<Company> findAll(){
         return companyRepo.findAll() ;
+    }
+
+    public Optional<Company> getCompanyById(Long id){
+
+        if(Boolean.TRUE.equals(companyRepo.existsById(id))){
+            return companyRepo.findById(id);
+        }
+        return null ;
     }
 
     @Override

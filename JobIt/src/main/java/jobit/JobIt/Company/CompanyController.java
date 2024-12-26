@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 
 @RestController
 @RequestMapping("/companies")
@@ -19,6 +20,12 @@ public class CompanyController {
     @GetMapping
     public List<Company> findAll(){
         return companyService.findAll() ;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Company> findCompanyById(@PathVariable Long id) {
+        Optional<Company> company = companyService.getCompanyById(id);
+        return company.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null   , HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
